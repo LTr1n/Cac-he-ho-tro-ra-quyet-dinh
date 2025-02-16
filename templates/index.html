@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Gợi Ý Nghề Nghiệp</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .btn {
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .result-container {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .result-container h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .result-container ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .result-container li {
+            margin-bottom: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hệ Thống Gợi Ý Nghề Nghiệp</h1>
+
+        <form method="POST" action="{{ url_for('index') }}">
+            <div class="form-group">
+                <label for="trait">Chọn Tính Cách:</label>
+                <select class="form-control" id="trait" name="trait">
+                    {% for trait in traits %}
+                    <option value="{{ trait }}">{{ trait }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="interest">Chọn Sở Thích:</label>
+                <select class="form-control" id="interest" name="interest">
+                    {% for interest in interests %}
+                    <option value="{{ interest }}">{{ interest }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Gửi</button>
+        </form>
+
+        {% if result %}
+        <div class="result-container">
+            <h2>Kết Quả</h2>
+            <p>Nhóm Gợi Ý: <strong>{{ result.group }}</strong></p>
+            <h3>Nghề Nghiệp Đề Xuất:</h3>
+            <ul>
+                {% for career in result.careers %}
+                <li>{{ career }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
